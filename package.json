@@ -1,9 +1,10 @@
 {
   "name": "happy-harness-plugin",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "main": "lib/index.js",
   "description": "Happy Harness relay plugin (tunnel + pairing + /happy commands)",
+  "repository": "mengyiheng/happy-harness-plugin",
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
