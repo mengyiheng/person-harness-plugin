@@ -1,0 +1,21 @@
+[
+  { "id": "user-temp", "name": "用户临时文件", "paths": ["%TEMP%"], "cleanable": true, "risk": "low" },
+  { "id": "sys-temp", "name": "系统临时文件", "paths": ["%WINDIR%\\Temp"], "cleanable": true, "risk": "low", "admin": true },
+  { "id": "wu-download", "name": "Windows 更新下载缓存", "paths": ["%WINDIR%\\SoftwareDistribution\\Download"], "cleanable": true, "risk": "medium", "admin": true, "note": "清理前建议先停 wuauserv 服务" },
+  { "id": "windows-old", "name": "Windows.old（旧系统）", "paths": ["C:\\Windows.old"], "cleanable": true, "risk": "high", "admin": true, "warning": "确认不需要回退系统后再清" },
+  { "id": "npm-cache", "name": "npm 缓存", "paths": ["%LOCALAPPDATA%\\npm-cache"], "cleanable": true, "risk": "low", "note": "npm cache clean --force" },
+  { "id": "pnpm-store", "name": "pnpm 存储", "paths": ["%LOCALAPPDATA%\\pnpm-cache", "%LOCALAPPDATA%\\pnpm\\store"], "cleanable": true, "risk": "low" },
+  { "id": "pip-cache", "name": "pip 缓存", "paths": ["%LOCALAPPDATA%\\pip\\cache"], "cleanable": true, "risk": "low" },
+  { "id": "huggingface-cache", "name": "HuggingFace 模型缓存", "paths": ["%USERPROFILE%\\.cache\\huggingface"], "cleanable": false, "risk": "medium", "note": "重下要几十 GB 流量，只报告" },
+  { "id": "chrome-cache", "name": "Chrome 缓存", "paths": ["%LOCALAPPDATA%\\Google\\Chrome\\User Data\\*\\Cache", "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\*\\Code Cache"], "cleanable": true, "risk": "low", "running": ["chrome.exe"], "warning": "Chrome 打开时清理可能损坏配置" },
+  { "id": "edge-cache", "name": "Edge 缓存", "paths": ["%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\*\\Cache", "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\*\\Code Cache"], "cleanable": true, "risk": "low", "running": ["msedge.exe"], "warning": "Edge 打开时清理可能损坏配置" },
+  { "id": "wechat-files", "name": "微信文件缓存", "paths": ["%APPDATA%\\Tencent\\WeChat"], "cleanable": false, "risk": "high", "note": "可能含聊天记录文件，只报告不列入清理" },
+  { "id": "qq-files", "name": "QQ 文件缓存", "paths": ["%APPDATA%\\Tencent\\QQ"], "cleanable": false, "risk": "high", "note": "同上，只报告" },
+  { "id": "crashdumps", "name": "应用崩溃转储", "paths": ["%LOCALAPPDATA%\\CrashDumps"], "cleanable": true, "risk": "low" },
+  { "id": "mem-dump", "name": "系统内存转储", "paths": ["%WINDIR%\\MEM.DUMP"], "cleanable": true, "risk": "low", "admin": true, "file": true },
+  { "id": "minidump", "name": "小内存转储", "paths": ["%WINDIR%\\Minidump"], "cleanable": true, "risk": "low", "admin": true },
+  { "id": "desktop-updaters", "name": "桌面应用更新器缓存", "paths": ["%LOCALAPPDATA%\\kimi-desktop-updater", "%LOCALAPPDATA%\\@deepseek-aidsh-desktop-updater"], "cleanable": true, "risk": "medium", "note": "旧版本安装包堆积；清理后下次更新需重新下载" },
+  { "id": "thumbnails", "name": "缩略图缓存", "paths": ["%LOCALAPPDATA%\\Microsoft\\Windows\\Explorer"], "cleanable": false, "risk": "medium", "note": "删后资源管理器会重建，收益小" },
+  { "id": "hiberfil", "name": "休眠文件", "paths": ["C:\\hiberfil.sys"], "cleanable": false, "risk": "high", "file": true, "admin": true, "note": "不用休眠功能可 powercfg /h off 释放" },
+  { "id": "pagefile", "name": "页面文件", "paths": ["C:\\pagefile.sys"], "cleanable": false, "risk": "high", "file": true, "admin": true, "note": "虚拟内存，勿动；可在系统设置转移位置" }
+]
