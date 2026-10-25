@@ -1,4 +1,4 @@
-# Happy Harness 插件（spike）：验证 DSH 宿主进程内跑长连出站 WS
+# Person Harness 插件（spike）：验证 DSH 宿主进程内跑长连出站 WS
 - insert:
-    - id: happy-harness-relay
-      name: 'happy-harness-plugin'
+    - id: person-harness-relay
+      name: 'person-harness-plugin'

@@ -1,28 +1,28 @@
-# happy-harness-plugin
+# person-harness-plugin
 
-DeepSeek Harness 插件：让手机 App（Happy Harness / 鸿蒙）通过公网中继访问本机 dsh 实例。
+DeepSeek Harness 插件：让手机 App（Person Harness / 鸿蒙）通过公网中继访问本机 dsh 实例。
 
 - 设备身份（Ed25519）+ 云端注册 + 出站隧道（手机 attach / E2E / 协议适配全部进程内完成）
 - E2E 加密：Ed25519 身份 + X25519 临时密钥 + AES-256-GCM，中继只见密文
-- `/happy pair` 一键配对：本机浏览器自动弹二维码，手机扫码即连
-- `/happy devices` / `/happy revoke <id>` / `/happy status` 设备管理
+- `/ph pair` 一键配对：本机浏览器自动弹二维码，手机扫码即连
+- `/ph devices` / `/ph revoke <id>` / `/ph status` 设备管理
 - 凭证：browserAuth.secret 自签 v1 owner Cookie（进程内现铸，无状态）
 
 ## 安装（目标电脑）
 
 ```bash
 # 1. 装进你在用的 profile（dsh plugin 是 pnpm 封装）
-dsh plugin --profile <你的profile> add github:<你的用户名>/happy-harness-plugin
+dsh plugin --profile <你的profile> add github:<你的用户名>/person-harness-plugin
 
 # 2. 注册为 bundle：编辑 ~/.dsh/profiles/<profile>/package.json
-#    dsh.profile.bundles 数组追加 "happy-harness-plugin"
+#    dsh.profile.bundles 数组追加 "person-harness-plugin"
 
 # 3. 配置服务器：该 profile 的 cordis.patch.yml 追加
-#    - id: happy-harness-relay
+#    - id: person-harness-relay
 #      config:
 #        server: http://<云端IP>:9400
 
-# 4. 重启该 profile 的 dsh 实例，对话里输入 /happy pair
+# 4. 重启该 profile 的 dsh 实例，对话里输入 /ph pair
 ```
 
 > 🔴 server 不要写 https://happy-harness.cn:9443：域名未备案，大陆机房会按 ClientHello
@@ -30,11 +30,11 @@ dsh plugin --profile <你的profile> add github:<你的用户名>/happy-harness-
 
 ## 目录
 
-- `lib/index.js` — 入口：身份/隧道启动、/happy 命令、v1 Cookie 铸造、二维码页
+- `lib/index.js` — 入口：身份/隧道启动、/ph 命令、v1 Cookie 铸造、二维码页
 - `lib/tunnel.mjs` — 出站隧道客户端（ws → 云端 → 手机 attach）
 - `lib/adapter.mjs` — 手机协议适配（HTTP/WS 流 ↔ dsh，24KB 分块 + 8ms 节流防 ArkWS 丢帧）
 - `lib/e2e.mjs` — E2E 密码学（与手机端 RelayE2E.ets 逐字对齐）
-- `lib/identity.mjs` — 设备身份与配对码（存 ~/.dsh/happy-harness/<profile>/）
+- `lib/identity.mjs` — 设备身份与配对码（存 ~/.dsh/person-harness/<profile>/）
 
 ## 多实例
 
@@ -43,9 +43,9 @@ dsh plugin --profile <你的profile> add github:<你的用户名>/happy-harness-
 
 ## 功能（数据总线 + 磁盘清理）
 
-- `/happy data` —— 资源管理器：本机文件全量索引、四级分级（公开/内部/敏感/禁碰）、每-agent 访问策略、访问台账与危险行为提醒。索引只存本机，检索结果按策略过滤
-- `/happy mcp` —— MCP 标准桥：Claude Code / OpenCode 等任何 MCP 宿主接入本机检索，全部访问留痕
-- `/happy clean` —— C 盘空间分析（只读）：可清理目标 / 目录大头 / 大而旧文件。**永不自动删除**，微信/QQ 等含个人数据的目录只报告不列入
+- `/ph data` —— 资源管理器：本机文件全量索引、四级分级（公开/内部/敏感/禁碰）、每-agent 访问策略、访问台账与危险行为提醒。索引只存本机，检索结果按策略过滤
+- `/ph mcp` —— MCP 标准桥：Claude Code / OpenCode 等任何 MCP 宿主接入本机检索，全部访问留痕
+- `/ph clean` —— C 盘空间分析（只读）：可清理目标 / 目录大头 / 大而旧文件。**永不自动删除**，微信/QQ 等含个人数据的目录只报告不列入
 
 ## 致谢与灵感来源（Acknowledgments）
 
