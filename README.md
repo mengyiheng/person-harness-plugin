@@ -66,6 +66,12 @@ npm run kimi:status
 
 Kimi 独立身份与会话默认保存在 `~/.ph/kimi-code/`。可执行文件不在 PATH 时追加 `--command "C:\\path\\to\\kimi.exe"`；也可用 `--kimi-home`、`--server`、`--port` 覆盖默认值。
 
+## 手机 App 源码与构建
+
+- HarmonyOS：见 `harmony-tunnel/README.md`。
+- Android：见 `android-app/README.md`。
+
+两个手机工程都包含在本仓库中。本机 SDK 路径、签名证书、密钥、构建缓存和安装包不进入源码仓库；正式发布时，签名后的 APK／HAP 与 SHA-256 校验值应附在 GitHub Release 中。
 ## 安装 dsh 插件：资源工具与 MCP 总线
 
 只有使用 dsh 插件链路、资源工具或 MCP 数据总线时才需要本节。开始前请安装 dsh CLI / 桌面版、Node.js ≥ 18 与 pnpm。

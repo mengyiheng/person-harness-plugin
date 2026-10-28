@@ -1,0 +1,17 @@
+{
+  "name": "copilot-cli",
+  "label": "Copilot CLI",
+  "port": 7720,
+  "cwd": ".",
+  "workspaces": [
+    { "id": "main", "name": "主工作区", "cwd": "." }
+  ],
+  "driver": {
+    "type": "copilot",
+    "command": "copilot",
+    "args": [],
+    "allowAllTools": false,
+    "models": [],
+    "env": {}
+  }
+}

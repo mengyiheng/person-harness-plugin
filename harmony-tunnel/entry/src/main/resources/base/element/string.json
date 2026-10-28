@@ -1,0 +1,9 @@
+{
+  "string": [
+    { "name": "app_name", "value": "智枢" },
+    { "name": "module_desc", "value": "智枢 客户端模块" },
+    { "name": "EntryAbility_desc", "value": "智枢 主界面" },
+    { "name": "EntryAbility_label", "value": "智枢" },
+    { "name": "cam_perm_reason", "value": "用于扫描 PC 配对二维码完成配对" }
+  ]
+}

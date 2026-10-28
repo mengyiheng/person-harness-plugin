@@ -5,12 +5,35 @@
   "main": "lib/index.js",
   "description": "Person Harness relay plugin (tunnel + pairing + tools + /ph commands)",
   "repository": "mengyiheng/person-harness-plugin",
+  "license": "MIT",
+  "scripts": {
+    "agent": "node lib/p4/agent.mjs",
+    "agent:pair": "node lib/p4/agent.mjs --pair",
+    "agent:status": "node lib/p4/agent.mjs --status",
+    "kimi": "node lib/p4/kimi-agent.mjs",
+    "kimi:pair": "node lib/p4/kimi-agent.mjs --pair",
+    "kimi:status": "node lib/p4/kimi-agent.mjs --status",
+    "test:kimi": "node test-kimi-agent.mjs",
+    "test:agent": "node test-independent-agent.mjs",
+    "test:codex": "node test-codex-agent.mjs",
+    "test:opencode": "node test-opencode-agent.mjs",
+    "test:pi": "node test-pi-agent.mjs",
+    "test:cursor": "node test-cursor-agent.mjs",
+    "test:copilot": "node test-copilot-agent.mjs",
+    "test:android-agent": "node verify-android-udp-fallback.mjs",
+    "test:android-udp-fallback": "node verify-android-udp-fallback.mjs --skip-approval",
+    "test:harmony-agent": "node verify-harmony-agent.mjs"
+  },
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
     }
   },
   "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.282",
     "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "ws": "^8.18.3"
   }
 }

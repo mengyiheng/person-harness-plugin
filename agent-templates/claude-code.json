@@ -1,0 +1,16 @@
+{
+  "name": "claude-code",
+  "label": "Claude Code",
+  "port": 7713,
+  "cwd": ".",
+  "workspaces": [
+    { "id": "main", "name": "主工作区", "cwd": "." }
+  ],
+  "driver": {
+    "type": "claude",
+    "sdkModule": "@anthropic-ai/claude-agent-sdk",
+    "models": [],
+    "defaultModel": "default",
+    "env": {}
+  }
+}

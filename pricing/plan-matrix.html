@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>套餐与功能对照</title>
+<style>
+  .ph-plans{font-family:-apple-system,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",sans-serif;
+    max-width:960px;margin:0 auto;padding:24px 16px;color:#1A1A1A;font-size:14px;line-height:1.6}
+  .ph-plans h2{text-align:center;font-size:22px;margin:0 0 4px}
+  .ph-plans .sub{text-align:center;color:#6B6F80;font-size:13px;margin-bottom:20px}
+  .ph-plans table{width:100%;border-collapse:collapse;background:#fff}
+  .ph-plans th,.ph-plans td{border:1px solid #E8EAF0;padding:10px 12px;text-align:center;vertical-align:middle}
+  .ph-plans thead th{background:#4D6BFE;color:#fff;font-size:15px}
+  .ph-plans thead th:first-child{background:#3B57D6}
+  .ph-plans tbody th{text-align:left;font-weight:600;background:#F7F8FA;white-space:nowrap}
+  .ph-plans .free{color:#B8860B;font-weight:600}
+  .ph-plans .std{color:#4D6BFE;font-weight:600}
+  .ph-plans .pro{color:#7B2FF2;font-weight:600}
+  .ph-plans .yes{color:#1A9E54;font-weight:700}
+  .ph-plans .part{color:#D48806;font-weight:700}
+  .ph-plans .no{color:#B0B4C0}
+  .ph-plans .note{display:block;font-size:12px;color:#6B6F80;font-weight:400;margin-top:2px}
+  .ph-plans tfoot td{background:#FFF7E6;font-size:12px;color:#6B6F80;text-align:left;line-height:1.7}
+  .ph-plans .price{font-size:20px;font-weight:800}
+  .ph-plans .price small{font-size:12px;font-weight:400;color:#6B6F80}
+  @media (max-width:640px){.ph-plans{padding:12px 6px;font-size:13px}
+    .ph-plans th,.ph-plans td{padding:6px 4px}}
+</style>
+</head>
+<body>
+<div class="ph-plans">
+  <h2>套餐与功能对照</h2>
+  <p class="sub">所有档位功能不锁死，区别在于带宽资源与传输速度</p>
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align:left">功能</th>
+        <th>免费版</th>
+        <th>标准版</th>
+        <th>高级版</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>价格</th>
+        <td class="free">¥0</td>
+        <td class="std"><span class="price">¥12<small>/月</small></span><br>¥128/年</td>
+        <td class="pro"><span class="price">¥30<small>/月</small></span><br>¥298/年</td>
+      </tr>
+      <tr>
+        <th>AI 对话框</th>
+        <td class="yes">✓ 无限制<span class="note">文字流畅使用</span></td>
+        <td class="yes">✓ 无限制</td>
+        <td class="yes">✓ 无限制</td>
+      </tr>
+      <tr>
+        <th>文件浏览 / 剪贴板 / 截图</th>
+        <td class="yes">✓ 可用</td>
+        <td class="yes">✓ 可用</td>
+        <td class="yes">✓ 可用</td>
+      </tr>
+      <tr>
+        <th>窗口实况</th>
+        <td class="part">△ 低帧率<span class="note">约 1 帧/秒，勉强能看</span></td>
+        <td class="yes">✓ 标清流畅</td>
+        <td class="yes">✓ 高清流畅</td>
+      </tr>
+      <tr>
+        <th>Web OS 完整模式</th>
+        <td class="part">△ 可打开<span class="note">加载慢，适合应急</span></td>
+        <td class="yes">✓ 正常使用</td>
+        <td class="yes">✓ 流畅使用</td>
+      </tr>
+      <tr>
+        <th>下载速度</th>
+        <td class="no">≈64 KB/s<span class="note">1GB 约 4.5 小时，仅供救急</span></td>
+        <td class="std">≈512 KB/s<span class="note">1GB 约 35 分钟，稳定可下</span></td>
+        <td class="pro">≈4 MB/s<span class="note">1GB 约 4 分钟，接近宽带上限</span></td>
+      </tr>
+      <tr>
+        <th>上传速度</th>
+        <td class="no">≈128 KB/s</td>
+        <td class="std">≈1 MB/s</td>
+        <td class="pro">≈4 MB/s</td>
+      </tr>
+      <tr>
+        <th>单文件大小上限</th>
+        <td>1 GB</td>
+        <td>1 GB</td>
+        <td>1 GB</td>
+      </tr>
+      <tr>
+        <th>同时在线设备</th>
+        <td>1 台电脑 + 1 台手机</td>
+        <td>2 台电脑 + 2 台手机</td>
+        <td>5 台电脑 + 5 台手机</td>
+      </tr>
+      <tr>
+        <th>断点续传</th>
+        <td class="yes">✓ 支持</td>
+        <td class="yes">✓ 支持</td>
+        <td class="yes">✓ 支持</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4">
+          注：速度为套餐带宽上限，实际速度同时受你的宽带与电脑所在网络影响；所有传输均端到端加密，服务器不存文件内容；
+          免费版如出现滥用（挂机刷流量），系统可能临时限速以保证其他用户。
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+</body>
+</html>

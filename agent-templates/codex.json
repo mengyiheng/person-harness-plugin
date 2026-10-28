@@ -1,0 +1,15 @@
+{
+  "name": "codex",
+  "label": "Codex",
+  "port": 7715,
+  "cwd": ".",
+  "workspaces": [
+    { "id": "main", "name": "主工作区", "cwd": "." }
+  ],
+  "driver": {
+    "type": "codex",
+    "command": "codex",
+    "args": ["app-server"],
+    "env": {}
+  }
+}

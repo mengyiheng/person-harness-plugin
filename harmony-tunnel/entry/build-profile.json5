@@ -1,0 +1,8 @@
+{
+  "apiType": "stageMode",
+  "buildOption": {},
+  "buildOptionSet": [
+    { "name": "release", "nativeLib": { "debugSymbol": { "strip": true, "exclude": [] } } }
+  ],
+  "targets": [{ "name": "default" }]
+}

@@ -1,0 +1,19 @@
+# Rust
+entry/src/main/rust/hh-boringtun/target/
+
+# 交叉编译产物（体积大，由 scripts/build-rust.sh 重新生成）
+entry/src/main/cpp/rust/
+
+# DevEco / OHOS
+.hvigor/
+.idea/
+build/
+entry/build/
+oh_modules/
+entry/oh_modules/
+local.properties
+*.har
+.cxx/
+
+# Node（companion 若迁入）
+node_modules/

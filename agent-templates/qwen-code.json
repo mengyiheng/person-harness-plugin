@@ -1,0 +1,15 @@
+{
+  "name": "qwen-code",
+  "label": "Qwen Code",
+  "port": 7718,
+  "cwd": ".",
+  "workspaces": [
+    { "id": "main", "name": "主工作区", "cwd": "." }
+  ],
+  "driver": {
+    "type": "acp",
+    "command": "qwen",
+    "args": ["--experimental-acp"],
+    "env": {}
+  }
+}

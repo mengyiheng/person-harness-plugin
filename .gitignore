@@ -1,3 +1,61 @@
+# Dependencies
 node_modules/
+oh_modules/
+**/node_modules/
+**/oh_modules/
+
+# Local runtime, pairing material, sessions and diagnostics
+runtime/
+diagnostics/
+capture-cache/
 qr-test.txt
 *.log
+run-kimi-agent.cmd
+
+# Internal handoffs and machine-specific notes
+HANDOFF-*.md
+**/DEBUG-ENV.md
+
+# Unreviewed local screenshots
+/app_screen*.jpeg
+
+# Editors and operating systems
+.idea/
+.vscode/
+.codegenie/
+**/.idea/
+**/.vscode/
+**/.codegenie/
+.DS_Store
+Thumbs.db
+*.code-workspace
+
+# Build outputs
+build/
+**/build/
+.gradle/
+**/.gradle/
+.hvigor/
+**/.hvigor/
+.cxx/
+**/.cxx/
+.preview/
+**/.preview/
+*.apk
+*.aab
+*.hap
+*.har
+*.app
+
+# Local SDK configuration, credentials and signing material
+local.properties
+**/local.properties
+.env
+.env.*
+!.env.example
+*.p12
+*.p7b
+*.cer
+*.jks
+*.keystore
+*.pem

@@ -1,0 +1,10 @@
+{
+  "name": "person-harness-tunnel",
+  "version": "0.1.0",
+  "modelVersion": "5.0.0",
+  "description": "智枢 Person Harness HarmonyOS 手机端",
+  "main": "",
+  "author": "personharness",
+  "license": "MIT",
+  "dependencies": {}
+}

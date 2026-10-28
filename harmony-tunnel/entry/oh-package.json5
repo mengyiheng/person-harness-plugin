@@ -1,0 +1,9 @@
+{
+  "name": "entry",
+  "version": "0.1.0",
+  "description": "Person Harness 隧道入口模块",
+  "main": "",
+  "author": "personharness",
+  "license": "MIT",
+  "dependencies": {}
+}

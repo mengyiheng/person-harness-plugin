@@ -1,0 +1,15 @@
+{
+  "name": "kimi-code",
+  "label": "Kimi Code",
+  "port": 7711,
+  "cwd": ".",
+  "workspaces": [
+    { "id": "main", "name": "主工作区", "cwd": "." }
+  ],
+  "driver": {
+    "type": "acp",
+    "command": "kimi",
+    "args": ["acp"],
+    "env": {}
+  }
+}

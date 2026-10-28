@@ -1,0 +1,15 @@
+{
+  "name": "my-acp-agent",
+  "label": "My ACP Agent",
+  "port": 7714,
+  "cwd": ".",
+  "workspaces": [
+    { "id": "main", "name": "主工作区", "cwd": "." }
+  ],
+  "driver": {
+    "type": "acp",
+    "command": "your-agent",
+    "args": ["acp"],
+    "env": {}
+  }
+}

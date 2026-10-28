@@ -1,0 +1,14 @@
+{
+  "name": "opencode",
+  "label": "OpenCode",
+  "port": 7716,
+  "cwd": ".",
+  "workspaces": [
+    { "id": "main", "name": "主工作区", "cwd": "." }
+  ],
+  "driver": {
+    "type": "opencode",
+    "command": "opencode",
+    "env": {}
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "pi",
+  "label": "Pi",
+  "port": 7717,
+  "cwd": ".",
+  "workspaces": [
+    { "id": "main", "name": "主工作区", "cwd": "." }
+  ],
+  "driver": {
+    "type": "pi",
+    "node": "node",
+    "command": "/absolute/path/to/pi/cli.js",
+    "sessionDir": "/absolute/path/to/pi/sessions",
+    "env": {}
+  }
+}
