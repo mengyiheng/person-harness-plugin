@@ -1,51 +1,149 @@
-# person-harness-plugin
+# 智枢 Person Harness
 
-DeepSeek Harness 插件：让手机 App（Person Harness / 鸿蒙）通过公网中继访问本机 dsh 实例。
+> 把电脑里的 Agent，带进手机。
 
-- 设备身份（Ed25519）+ 云端注册 + 出站隧道（手机 attach / E2E / 协议适配全部进程内完成）
-- E2E 加密：Ed25519 身份 + X25519 临时密钥 + AES-256-GCM，中继只见密文
-- `/ph pair` 一键配对：本机浏览器自动弹二维码，手机扫码即连
-- `/ph devices` / `/ph revoke <id>` / `/ph status` 设备管理
-- 凭证：browserAuth.secret 自签 v1 owner Cookie（进程内现铸，无状态）
+智枢连接本机 Agent、HarmonyOS / Android App 与 MCP 数据总线。工作区和文件留在电脑，手机接续对话、停止生成并处理工具审批；经过标准桥的文件检索和读取按授权执行，并留下本机台账。
 
-## 安装（目标电脑）
+[产品主页](http://8.137.177.62:9400/) · [功能详解](http://8.137.177.62:9400/features) · [多 Agent](http://8.137.177.62:9400/agents)
+
+## 有什么
+
+- **PC 插件 0.5.0**：设备配对、端到端加密隧道、工作区与会话、文件工具、MCP 数据总线。
+- **两款手机 App**：HarmonyOS 与 Android 共享配对和加密协议，可切换工作区、恢复会话并使用远程工具。
+- **8 家独立 Agent 配置**：Kimi Code、Claude Code、Codex、OpenCode、Pi、Qwen Code、Cursor CLI、Copilot CLI。
+- **MCP 数据总线**：提供 `search_local_files` 与 `read_local_file` 两个标准工具，按宿主和文件策略授权并留痕。
+- **本机工具箱**：文件与整文件夹互传、资源检索与预览、剪贴板同步、电脑截图、窗口实况与点击回传。
+
+Agent 和文件始终运行、保存在自己的电脑上，无需把项目迁移到另一个平台。
+
+## 快速开始：独立 Agent
+
+独立 Agent 不依赖 dsh。每家使用自己的配置、身份、端口、工作区和会话，共享同一套配对与加密基础设施。
+
+环境要求：Node.js ≥ 18、pnpm，以及待接入 Agent 自己的 CLI / SDK 和有效登录。
 
 ```bash
-# 1. 装进你在用的 profile（dsh plugin 是 pnpm 封装）
-dsh plugin --profile <你的profile> add github:<你的用户名>/person-harness-plugin
-
-# 2. 注册为 bundle：编辑 ~/.dsh/profiles/<profile>/package.json
-#    dsh.profile.bundles 数组追加 "person-harness-plugin"
-
-# 3. 配置服务器：该 profile 的 cordis.patch.yml 追加
-#    - id: person-harness-relay
-#      config:
-#        server: http://<云端IP>:9400
-
-# 4. 重启该 profile 的 dsh 实例，对话里输入 /ph pair
+git clone https://github.com/mengyiheng/person-harness-plugin.git
+cd person-harness-plugin
+pnpm install
 ```
 
-> 🔴 server 不要写 https://happy-harness.cn:9443：域名未备案，大陆机房会按 ClientHello
-> 指纹剥离/阻断 SNI（手机端、Node 原生 TLS 均中招）。明文 9400 + E2E 是当前稳妥方案。
+从 `agent-templates/` 复制一份配置，按本机路径修改 `command`、`cwd`、`home` 等字段。每份配置必须使用独立的 `name`、`port` 和 `home`。
+
+| Agent | 驱动方式 | 配置模板 |
+| --- | --- | --- |
+| Kimi Code | ACP | `kimi-code.json` |
+| Claude Code | Claude Agent SDK | `claude-code.json` |
+| Codex | app-server / JSON-RPC | `codex.json` |
+| OpenCode | HTTP / SSE | `opencode.json` |
+| Pi | RPC | `pi.json` |
+| Qwen Code | ACP | `qwen-code.json` |
+| Cursor CLI | print / stream-json | `cursor-cli.json` |
+| Copilot CLI | print / CLI | `copilot-cli.json` |
+
+```bash
+# 首次启动并生成该 Agent 自己的配对二维码
+npm run agent:pair -- --config "D:\\path\\to\\my-agent.json"
+
+# 已配对后日常启动
+npm run agent -- --config "D:\\path\\to\\my-agent.json"
+
+# 查看该配置的独立身份与状态
+npm run agent:status -- --config "D:\\path\\to\\my-agent.json"
+```
+
+命令行的 `--name`、`--label`、`--port`、`--cwd`、`--home`、`--reg`、`--server` 可覆盖配置；重复传入 `--workspace "名称=目录"` 可配置多个工作区。`--no-tunnel` 仅用于本机测试，不能用于手机配对。
+
+**当前真机状态：Kimi Code 已完成双端真机验证，其他 Agent 按登录和上游服务情况逐步开放。**
+
+### Kimi Code 简写命令
+
+```bash
+npm run kimi:pair -- --cwd "D:\\path\\to\\workspace"
+npm run kimi -- --cwd "D:\\path\\to\\workspace"
+npm run kimi:status
+```
+
+Kimi 独立身份与会话默认保存在 `~/.ph/kimi-code/`。可执行文件不在 PATH 时追加 `--command "C:\\path\\to\\kimi.exe"`；也可用 `--kimi-home`、`--server`、`--port` 覆盖默认值。
+
+## 安装 dsh 插件：资源工具与 MCP 总线
+
+只有使用 dsh 插件链路、资源工具或 MCP 数据总线时才需要本节。开始前请安装 dsh CLI / 桌面版、Node.js ≥ 18 与 pnpm。
+
+```bash
+# 1. 装进正在使用的 profile（web 或 desktop）
+cd ~/.dsh/profiles/web
+pnpm add github:mengyiheng/person-harness-plugin
+```
+
+编辑该 profile 的 `package.json`，在 `dsh.profile.bundles` 数组中追加：
+
+```json
+"person-harness-plugin"
+```
+
+在该 profile 的 `cordis.patch.yml` 末尾追加协调服务配置：
+
+```yaml
+- id: person-harness-relay
+  config:
+    server: http://8.137.177.62:9400
+```
+
+彻底重启对应实例，在 dsh 对话框执行 `/ph pair`，再用手机扫码或输入配对码。`/ph status` 可检查身份和隧道状态。
+
+> 协调服务当前使用 `http://8.137.177.62:9400`。不要改用未备案域名的 HTTPS 地址；业务内容由端到端加密保护。
+
+### 常用插件命令
+
+| 命令 | 用途 |
+| --- | --- |
+| `/ph pair` | 生成一次性配对码与二维码 |
+| `/ph data` | 打开资源索引、文件策略、审计与 MCP 监测台 |
+| `/ph mcp` | 获取 MCP 标准桥接入配置 |
+| `/ph devices` | 查看已配对设备 |
+| `/ph revoke <pairId>` | 解除设备配对并撤回权限 |
+| `/ph history` | 查看本机连接历史 |
+| `/ph status` | 检查身份与隧道状态 |
+| `/ph clean` | 只读分析 C 盘空间，不自动删除文件 |
+
+## MCP 数据总线
+
+标准桥向兼容 MCP 宿主提供两个本机文件工具：
+
+- `search_local_files`：按关键词检索本机索引，结果按策略过滤。
+- `read_local_file`：按授权读取文件，并记录允许、拒绝或错误结果。
+
+文件分为公开、内部、敏感、禁碰四级。插件所在宿主必需接入，其他宿主由用户明确选择允许接入或不接入，可随时调整。
+
+监测台的“MCP 接入”页可生成包含真实 Node、桥接脚本和数据目录的 `mcpServers` JSON。已知宿主可自动发现；未知宿主可登记现有 JSON 配置路径，授权后写入并保留 `.ph-backup`。仅生成或登记配置不会修改宿主文件，“配置已写入”也不等于“已收到标准桥握手”。
+
+只使用 WorkBuddy 等 MCP 宿主时，不需要安装其他独立 Agent，但插件与总线仍由 dsh 安装和运行。WorkBuddy、OpenClaw、Clawdbot 等按 MCP 宿主管理，不等同于已有手机驱动的独立 Agent，具体版本兼容性需实机验证。
+
+**监测边界：**台账只覆盖经过智枢标准桥的握手、检索、读取、拒绝和错误；桥外直接访问、其他旁路 MCP Server 与单纯安装行为不在监测范围内。
+
+## 连接与安全
+
+- Ed25519 验证设备身份，X25519 协商临时密钥，AES-256-GCM 保护会话和工具数据。
+- 中继服务只转发端到端密文；无需手机号、邮箱或真实姓名。
+- 适合的网络下可建立 UDP 业务直连，失败时回落 E2E 中继；实际能力取决于 NAT、运营商与当前网络环境。
+- 索引、资源策略、MCP 台账和连接历史保存在本机；设备配对与 MCP 接入授权可以撤回。
 
 ## 目录
 
-- `lib/index.js` — 入口：身份/隧道启动、/ph 命令、v1 Cookie 铸造、二维码页
-- `lib/tunnel.mjs` — 出站隧道客户端（ws → 云端 → 手机 attach）
-- `lib/adapter.mjs` — 手机协议适配（HTTP/WS 流 ↔ dsh，24KB 分块 + 8ms 节流防 ArkWS 丢帧）
-- `lib/e2e.mjs` — E2E 密码学（与手机端 RelayE2E.ets 逐字对齐）
-- `lib/identity.mjs` — 设备身份与配对码（存 ~/.dsh/person-harness/<profile>/）
+- `lib/index.js`：dsh 插件入口、身份与隧道、`/ph` 命令和配对页面。
+- `lib/tunnel.mjs`：出站隧道客户端。
+- `lib/adapter.mjs`：手机协议与 dsh 之间的适配。
+- `lib/e2e.mjs`：端到端加密实现。
+- `lib/identity.mjs`：设备身份与配对码。
+- `lib/p4/agent.mjs`：配置驱动的独立 Agent 入口。
+- `lib/p4/independent-agent.mjs`：独立轻壳、工作区、会话、审批和配对隧道。
+- `agent-templates/`：8 家 Agent 与通用 ACP 配置模板。
+- `lib/data-bus.mjs`、`lib/mcp-server.mjs`：本机资源策略与 MCP 标准桥。
+- `lib/databus-ui.mjs`：数据总线监测台。
+- `harmony-tunnel/`、`android-app/`：两款手机 App 工程。
 
-## 多实例
-
-按 profile 分身份（web/desktop 互不顶替）：桌面版与命令行版同时运行时各自独立隧道；
-配对码天然绑定签发它的实例。
-
-## 功能（数据总线 + 磁盘清理）
-
-- `/ph data` —— 资源管理器：本机文件全量索引、四级分级（公开/内部/敏感/禁碰）、每-agent 访问策略、访问台账与危险行为提醒。索引只存本机，检索结果按策略过滤
-- `/ph mcp` —— MCP 标准桥：Claude Code / OpenCode 等任何 MCP 宿主接入本机检索，全部访问留痕
-- `/ph clean` —— C 盘空间分析（只读）：可清理目标 / 目录大头 / 大而旧文件。**永不自动删除**，微信/QQ 等含个人数据的目录只报告不列入
+dsh 多实例按 profile 分配身份，web / desktop 可同时运行且互不顶替。编程接入其他内核时，可通过 `startIndependentAgent({ driver, ... })` 复用独立 Agent 启动层。
 
 ## 致谢与灵感来源（Acknowledgments）
 
@@ -64,4 +162,3 @@ dsh plugin --profile <你的profile> add github:<你的用户名>/person-harness
 5. **条款生效**：下载、编译、安装、配对或使用本软件任一功能，即视为你已阅读并同意本条款。若你不同意，请停止使用并删除本软件。
 
 *正式开源发布时可补充英文对照版本；涉及法律效力的场景，以届时律师审阅的正式版本为准。*
-
