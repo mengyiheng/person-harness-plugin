@@ -14,6 +14,8 @@
     "kimi:pair": "node lib/p4/kimi-agent.mjs --pair",
     "kimi:status": "node lib/p4/kimi-agent.mjs --status",
     "test:kimi": "node test-kimi-agent.mjs",
+    "test:mcp-bridge": "node test-mcp-bridge.mjs",
+    "test:mcp-access": "node test-mcp-access.mjs",
     "test:agent": "node test-independent-agent.mjs",
     "test:codex": "node test-codex-agent.mjs",
     "test:opencode": "node test-opencode-agent.mjs",
@@ -22,7 +24,14 @@
     "test:copilot": "node test-copilot-agent.mjs",
     "test:android-agent": "node verify-android-udp-fallback.mjs",
     "test:android-udp-fallback": "node verify-android-udp-fallback.mjs --skip-approval",
-    "test:harmony-agent": "node verify-harmony-agent.mjs"
+    "test:harmony-agent": "node verify-harmony-agent.mjs",
+    "mobile:inspect": "node scripts/mobile-package.mjs inspect",
+    "mobile:archive": "node scripts/mobile-package.mjs archive",
+    "mobile:install": "node scripts/mobile-package.mjs install",
+    "test:all": "node scripts/run-all-tests.mjs",
+    "test:t27": "node test-t27-packages.mjs",
+    "package:t27": "node scripts/package-editions.mjs",
+    "test:mobile-package": "node --test scripts/mobile-package.test.mjs"
   },
   "dsh": {
     "bundle": {

@@ -1,0 +1,68 @@
+# T27 六包 npm 受信发布（OIDC Trusted Publishing，免令牌免 2FA）
+# 触发：手动 workflow_dispatch
+# 前提：npmjs.com 账号（mengyiheng）→ Trusted Publishers 已登记本仓库+本 workflow
+name: publish-npm
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # OIDC：npm 受信发布必需
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # 受信发布需要 npm >= 11.5.1
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
+      - name: Install dev deps
+        run: npm ci || npm install
+
+      - name: Build six packages
+        run: npm run package:t27
+
+      - name: Verify checksums
+        run: |
+          cd artifacts/t27
+          sha256sum -c SHA256SUMS.txt
+
+      - name: Publish person-harness-core
+        run: npm publish --access public
+        working-directory: artifacts/t27/person-harness-core
+
+      - name: Publish person-harness-dsh
+        run: npm publish --access public
+        working-directory: artifacts/t27/person-harness-dsh
+
+      - name: Publish person-harness-opencode
+        run: npm publish --access public
+        working-directory: artifacts/t27/person-harness-opencode
+
+      - name: Publish person-harness-kimi
+        run: npm publish --access public
+        working-directory: artifacts/t27/person-harness-kimi
+
+      - name: Publish person-harness-qwen
+        run: npm publish --access public
+        working-directory: artifacts/t27/person-harness-qwen
+
+      - name: Publish person-harness-pi
+        run: npm publish --access public
+        working-directory: artifacts/t27/person-harness-pi
+
+      - name: Summary
+        run: |
+          echo "Published:"
+          for p in core dsh opencode kimi qwen pi; do
+            v=$(node -p "require('./artifacts/t27/person-harness-$p/package.json').version")
+            echo "  person-harness-$p@$v"
+          done
